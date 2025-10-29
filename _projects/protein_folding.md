@@ -3,21 +3,25 @@ layout: page
 title: Protein Folding
 description: Ab Initio Protein Folding via constraint-based optimization.
 img: assets/img/balls_sticks.png
-importance: 4
+importance: 3
 #category: fun
-published: false 
+published: true 
 ---
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        <img src="{{ '/assets/img/1LB0_new.mp4' | relative_url }}" alt="1LB0" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;">
+<div class="row justify-content-center">
+    <div class="col-sm-6 col-md-4 mt-3 mt-md-0">
+        <video src="{{ '/assets/img/1LB0_new.mp4' | relative_url }}" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;" controls autoplay loop muted>
+            Your browser does not support the video tag.
+        </video>
     </div>
-    <div class="col-sm mt-3 mt-md-0">
-        <img src="{{ '/assets/img/1UAO.mp4' | relative_url }}" alt="1UAO" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;">
+    <div class="col-sm-6 col-md-4 mt-3 mt-md-0">
+        <video src="{{ '/assets/img/1UAO.mp4' | relative_url }}" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;" controls autoplay loop muted>
+            Your browser does not support the video tag.
+        </video>
     </div>
 </div>
-<div class="caption">
-	RRR runs demonstrating miniprotein folding via constraint-based optimization.
+<div class="caption text-center">
+    RRR runs demonstrating miniprotein folding via constraint-based optimization.
 </div>
 
 
@@ -45,10 +49,11 @@ We solve via **divide–and–concur**:
 - **Concur:** reconcile replicas into a **globally consistent** set of positions/energies and enforce a **total non-bonded energy threshold** (progressively lowered across runs).
 
 The iteration uses **Reflect–Reflect–Relax (RRR)**:
-\[
+
+$$
 y' = y + \beta\big(P_B(2P_A(y) - y) - P_A(y)\big), \quad \beta \in (0,2)
-\]
-which is effective for **non-convex** constraint sets and empirically avoids stagnation typical of simple alternating projections.
+$$
+
 
 ### Why This Helps
 
@@ -62,7 +67,7 @@ Using modest H-bond counts and an energy target, the method recovers native-like
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1UAO" title="Folding via constraint satisfaction" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/1UAO.png" title="Folding via constraint satisfaction" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">

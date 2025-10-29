@@ -3,7 +3,7 @@ layout: page
 title: Hexein Folding
 description: A minimal lattice model that captures protein folding through constraint-based rules and iterative projections. 
 img: assets/img/glob_hexein.png
-importance: 3
+importance: 4
 #category: fun
 published: true 
 ---
@@ -14,7 +14,7 @@ published: true
     </div>
 </div>
 <div class="caption">
-    *bowt29* hexein's primary sequence.
+    <em>bowt29</em> hexein's primary sequence.
 </div>
 
 <div class="row">
@@ -23,7 +23,7 @@ published: true
     </div>
 </div>
 <div class="caption">
-    Simulation depicting the RRR run and gap between divide and concur constraint sets that successfully folds *bowt29* hexein.
+    Simulation depicting the RRR run and gap between divide and concur constraint sets that successfully folds <em>bowt29</em> hexein.
 </div>
 
 ### Overview
@@ -46,7 +46,7 @@ Unlike traditional energy-minimization methods, Hexein treats folding as a **con
     </div>
 </div>
 <div class="caption">
-	Local configurations that satisfy adjacency rules are captured in a compact **motif library** of allowed 7-tile patterns. Each lattice site and its neighbors must match one of these motifs, drastically reducing the conformational search space.
+	Local configurations that satisfy adjacency rules are captured in a compact <b>motif library</b> of allowed 7-tile patterns. Each lattice site and its neighbors must match one of these motifs, drastically reducing the conformational search space.
 </div>
 
 ---

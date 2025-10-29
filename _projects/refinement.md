@@ -2,7 +2,7 @@
 layout: page
 title: Resolving Tangling in Multi-Conformer Refinement via Iterative Projections
 #description: Multi-Conformer Refinement
-img: assets/img/bestAB.png
+img: assets/img/resolution.png
 importance: 2
 related_publications: true
 #category: work
