@@ -56,6 +56,11 @@ ninja.data = [{
           description: "",
           section: "Projects",handler: () => {
               window.location.href = "/projects/refinement/";
+            },},{id: "projects-hexein-folding",
+          title: 'Hexein Folding',
+          description: "A minimal lattice model that captures protein folding through constraint-based rules and iterative projections.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/seqvence/";
             },},{
       id: 'light-theme',
       title: 'Change theme to light',
