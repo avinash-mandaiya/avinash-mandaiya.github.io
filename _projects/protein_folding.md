@@ -1,82 +1,80 @@
 ---
 layout: page
-title: project 3 with very long name
-description: a project that redirects to another website
-img: assets/img/7.jpg
-redirect: https://unsplash.com
+title: Protein Folding
+description: Ab Initio Protein Folding via constraint-based optimization.
+img: assets/img/balls_sticks.png
 importance: 4
-category: work
+#category: fun
 published: false 
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ '/assets/img/1LB0_new.mp4' | relative_url }}" alt="1LB0" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;">
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <img src="{{ '/assets/img/1UAO.mp4' | relative_url }}" alt="1UAO" class="img-fluid rounded z-depth-1" style="height: 400px; width: auto; object-fit: contain;">
+    </div>
+</div>
+<div class="caption">
+	RRR runs demonstrating miniprotein folding via constraint-based optimization.
+</div>
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+### Overview
+
+The **protein folding problem** asks: given a primary amino-acid sequence and environment (temperature, ionic strength, pH, solvent), what 3D structure is thermodynamically favored? While learning-based models (e.g., AlphaFold2/3) are transformative, they rely heavily on **homology** and can struggle with **no-homologue sequences, novel mutations, intrinsically disordered regions,** and **highly dynamic proteins**. They also operate as “black boxes,” offering limited mechanistic insight for design.
+
+### Ab Initio Approach
+
+We take a **first-principles** route. Classical force fields (CHARMM/AMBER) model bonded terms (bond stretch, angle bend, dihedrals, impropers, Urey–Bradley) and non-bonded terms (electrostatics, van der Waals). Brute-force MD can capture folding, but long timescales (µs–ms) make it **computationally expensive** per system.
+
+**Bonded terms are stiff** therefore they strongly constrain the local geometry. We treat much of the local structure as **geometric constraints** and focus search on **non-bonded interactions** and **dihedrals** while applying additional constraints via divide & concur framework that trims the search space.
+
+### Constraint Satisfaction Formulation
+
+We represent the structure with two variable types:
+- **Positions:** atomic coordinates for enforcing **geometric constraints** (rigid motifs: peptide planarity, hybridization geometry, rigid fragments; and dihedral motif choices like gauche/anti with small tolerances).
+- **Energies:** per-pair **Coulomb** and **van der Waals** contributions, plus a **global energy target**.
+
+We solve via **divide–and–concur**:
+- **Divide:** enforce constraints locally using **projections**  
+  - *Energy consistency:* tie energy variables to the corresponding interatomic distances (Coulomb; modified LJ for tractable projection).  
+  - *Geometry:* rigid-body projections (Kabsch–Umeyama) with **short-projection tolerances** (~0.1 Å) for realism.  
+  - *Hydrogen bonding:* two constraints—(i) minimum total H-bonds, (ii) **secondary-structure units** (helix i→i−4, anti-parallel sheet pairings).  
+- **Concur:** reconcile replicas into a **globally consistent** set of positions/energies and enforce a **total non-bonded energy threshold** (progressively lowered across runs).
+
+The iteration uses **Reflect–Reflect–Relax (RRR)**:
+\[
+y' = y + \beta\big(P_B(2P_A(y) - y) - P_A(y)\big), \quad \beta \in (0,2)
+\]
+which is effective for **non-convex** constraint sets and empirically avoids stagnation typical of simple alternating projections.
+
+### Why This Helps
+
+- **Efficiency:** Constraints prune vast swaths of implausible conformations without expensive dynamics.  
+- **Extensibility:** New biophysical priors (e.g., H-bond counts, hydrophobic core compactness, residue-specific propensities) slot in as projections—no retraining required.  
+- **Mechanistic clarity:** Each projection corresponds to a **physical rule**, yielding interpretable levers.
+
+### Illustrative Results (Miniproteins)
+
+Using modest H-bond counts and an energy target, the method recovers native-like folds for **helical** (e.g., 1LB0) and **β-sheet** (e.g., 1UAO) miniproteins with in tens of thousands of RRR iterations as shown in the figure below. A small explicit solvent shell is used; **water–water** interactions are disabled to avoid spurious clustering while retaining essential protein–water contacts.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/1UAO" title="Folding via constraint satisfaction" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
+	RRR run showing different stages of folding for 1UAO compared to the true fold.
 </div>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+### Takeaways
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+- Constraint-based folding is a **practical middle ground**: more mechanistic than pure ML and often far cheaper than long MD trajectories.  
+- It’s a principled platform for **design and refinement**, where you can enforce what you know (geometry, hydrogen bonds, energies) and search efficiently for structures that satisfy those facts.
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+---
 
-{% raw %}
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
 
-{% endraw %}

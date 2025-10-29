@@ -2,7 +2,7 @@
 layout: page
 title: Hexein Folding
 description: A minimal lattice model that captures protein folding through constraint-based rules and iterative projections. 
-img: glob_hexein.png
+img: assets/img/glob_hexein.png
 importance: 3
 #category: fun
 published: true 
@@ -19,7 +19,7 @@ published: true
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include video.liquid path="assets/img/newb29err.mp4.mp4" class="img-fluid rounded z-depth-1" controls=true autoplay=true %}
+        {% include video.liquid path="assets/img/newb29err.mp4" class="img-fluid rounded z-depth-1" controls=true autoplay=true %}
     </div>
 </div>
 <div class="caption">
