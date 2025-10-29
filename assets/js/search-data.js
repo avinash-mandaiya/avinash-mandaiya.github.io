@@ -51,6 +51,11 @@ ninja.data = [{
           description: "A divide-and-concur approach to solving MAPF problem.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/mapf/";
+            },},{id: "projects-protein-folding",
+          title: 'Protein Folding',
+          description: "Ab Initio Protein Folding via constraint-based optimization.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/protein_folding/";
             },},{id: "projects-resolving-tangling-in-multi-conformer-refinement-via-iterative-projections",
           title: 'Resolving Tangling in Multi-Conformer Refinement via Iterative Projections',
           description: "",
